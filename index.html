@@ -5,8 +5,7 @@
   <title>Envoyer un message</title>
   <style>
     body {
-      background-color: #b6e5f7
-      /* fond clair bleu très pâle */
+      background-color: #b6e5f7; /* fond clair bleu très pâle */
       color: #004d99; /* bleu foncé pour le texte principal */
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       padding: 0;
@@ -19,14 +18,14 @@
 
     h2#recipient {
       margin-top: 40px;
-      color: #0099cc; /* bleu cyan vif */
+      color: #0099cc;
       text-shadow: 0 0 5px #00ccff88, 0 0 10px #00ccff55;
       font-weight: 700;
       letter-spacing: 1.2px;
     }
 
     form {
-      background: #ccefff; /* bleu clair */
+      background: #ccefff;
       padding: 25px 30px;
       border-radius: 16px;
       box-shadow: 0 4px 15px rgba(0, 153, 204, 0.3);
@@ -46,7 +45,7 @@
       margin-bottom: 20px;
       border: 2px solid #00bfff;
       border-radius: 12px;
-      background: #f0fcff; /* presque blanc cyan */
+      background: #f0fcff;
       color: #004d99;
       font-size: 16px;
       resize: vertical;
@@ -60,7 +59,6 @@
       outline: none;
       border-color: #0099cc;
       box-shadow: 0 0 8px #00ccffaa;
-   
     }
 
     button {
@@ -83,102 +81,149 @@
       background: linear-gradient(90deg, #0099cc, #00aaff);
       box-shadow: 0 6px 20px rgba(0, 170, 255, 0.9);
     }
-  .inputps{
-    display: block;
-    margin-bottom: 15px;
-    justify-content: center;
-    align-items: center;
-    margin: 35px;
-    font-size: 17px;
-    border-radius: 35px;
-    height: 28px;
-    box-shadow:0 0 15px #288cb2;
-    text-align: center;
-  }
-/* Mobiles petits et moyens */
-@media (max-width: 600px) {
-  body {
-    padding: 0 2vw;
-    min-height: 100vh;
-  }
-  h2#recipient {
-    font-size: 1.2em;
-    margin-top: 24px;
-  }
-  form {
-    padding: 16px 6vw;
-    margin-top: 16px;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 12px;
-  }
-  textarea, .inputps {
-    font-size: 15px;
-    padding: 10px;
-    border-radius: 10px;
-  }
-  button {
-    padding: 11px 18px;
-    font-size: 15px;
-    border-radius: 10px;
-  }
-}
 
-/* Tablettes */
-@media (min-width: 601px) and (max-width: 900px) {
-  body {
-    padding: 0 6vw;
-  }
-  form {
-    width: 95%;
-    max-width: 650px;
-    padding: 20px 18px;
-  }
-  button, textarea, .inputps {
-    font-size: 16px;
-  }
-}
+    .inputps {
+      display: block;
+      margin-bottom: 15px;
+      justify-content: center;
+      align-items: center;
+      margin: 35px;
+      font-size: 17px;
+      border-radius: 35px;
+      height: 28px;
+      box-shadow: 0 0 15px #288cb2;
+      text-align: center;
+    }
 
-/* Grands écrans / desktops */
-@media (min-width: 901px) {
-  body {
-    padding: 0;
-  }
-  form {
-    width: 90%;
-    max-width: 500px;
-    padding: 25px 30px;
-  }
-}
+    /* Mobiles très petits (moins de 360px) */
+    @media (max-width: 360px) {
+      h2#recipient {
+        font-size: 1em;
+        margin-top: 20px;
+      }
+
+      form {
+        padding: 12px;
+        width: 100%;
+      }
+
+      textarea, .inputps {
+        font-size: 14px;
+        padding: 8px;
+        border-radius: 8px;
+      }
+
+      button {
+        font-size: 14px;
+        padding: 10px 16px;
+        border-radius: 8px;
+      }
+    }
+
+    /* Mobiles standards (361px à 600px) */
+    @media (min-width: 361px) and (max-width: 600px) {
+      body {
+        padding: 0 2vw;
+      }
+
+      h2#recipient {
+        font-size: 1.2em;
+        margin-top: 24px;
+      }
+
+      form {
+        padding: 16px 6vw;
+        width: 100%;
+        max-width: 100%;
+        border-radius: 12px;
+      }
+
+      textarea, .inputps {
+        font-size: 15px;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      button {
+        padding: 11px 18px;
+        font-size: 15px;
+        border-radius: 10px;
+      }
+    }
+
+    /* Tablettes */
+    @media (min-width: 601px) and (max-width: 900px) {
+      body {
+        padding: 0 5vw;
+      }
+
+      form {
+        width: 90%;
+        max-width: 600px;
+        padding: 20px;
+      }
+
+      textarea, .inputps {
+        font-size: 16px;
+        padding: 12px;
+      }
+
+      button {
+        padding: 13px 24px;
+        font-size: 16px;
+      }
+    }
+
+    /* Grands écrans */
+    @media (min-width: 901px) {
+      body {
+        padding: 0;
+      }
+
+      form {
+        width: 80%;
+        max-width: 500px;
+        padding: 25px 30px;
+      }
+
+      textarea, .inputps {
+        font-size: 17px;
+      }
+
+      button {
+        padding: 14px 30px;
+        font-size: 16px;
+      }
+    }
   </style>
 </head>
 <body>
   <h2 id="recipient">Envoyez votre message</h2>
   <form id="messageForm">
-    <input type="text" class="inputps"  id="receiver" placeholder="Pseudo du destinataire"/>
-    
+    <input type="text" class="inputps" id="receiver" placeholder="Pseudo du destinataire" />
     <textarea placeholder="Écris ton message ici..." required></textarea>
     <button type="submit">Envoyer</button>
   </form>
-  <script src="message.js"></script>
-<script>
-  window.onload = function () {
-    const params = new URLSearchParams(window.location.search);
-    const pseudo = params.get('to');
-    if (pseudo) {
-      const input = document.getElementById('receiver');
-      if (input) {
-        input.value = decodeURIComponent(pseudo);
-        input.focus();
-      }
-    }
 
-    const textarea = document.querySelector("textarea");
-    textarea.addEventListener("input", () => {
-      textarea.style.height = "auto"; // réinitialise la hauteur
-      textarea.style.height = textarea.scrollHeight + "px"; // ajuste
-    });
-  };
-</script>
+  <script src="message.js"></script>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const pseudo = params.get('to');
+      if (pseudo) {
+        const input = document.getElementById('receiver');
+        if (input) {
+          input.value = decodeURIComponent(pseudo);
+          input.focus();
+        }
+      }
+
+      const textarea = document.querySelector("textarea");
+      textarea.addEventListener("input", () => {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + "px";
+      });
+    };
+  </script>
 </body>
-  </html>
+</html>
