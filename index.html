@@ -95,6 +95,61 @@
     box-shadow:0 0 15px #288cb2;
     text-align: center;
   }
+/* Mobiles petits et moyens */
+@media (max-width: 600px) {
+  body {
+    padding: 0 2vw;
+    min-height: 100vh;
+  }
+  h2#recipient {
+    font-size: 1.2em;
+    margin-top: 24px;
+  }
+  form {
+    padding: 16px 6vw;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 12px;
+  }
+  textarea, .inputps {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 10px;
+  }
+  button {
+    padding: 11px 18px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+}
+
+/* Tablettes */
+@media (min-width: 601px) and (max-width: 900px) {
+  body {
+    padding: 0 6vw;
+  }
+  form {
+    width: 95%;
+    max-width: 650px;
+    padding: 20px 18px;
+  }
+  button, textarea, .inputps {
+    font-size: 16px;
+  }
+}
+
+/* Grands écrans / desktops */
+@media (min-width: 901px) {
+  body {
+    padding: 0;
+  }
+  form {
+    width: 90%;
+    max-width: 500px;
+    padding: 25px 30px;
+  }
+}
   </style>
 </head>
 <body>
