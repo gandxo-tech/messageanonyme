@@ -206,6 +206,55 @@
   </form>
 
   <script src="message.js"></script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyBqk3L_qkolD41H3yvHEzz4O-Sr15I-Tko",
+    authDomain: "gandxoanonymous.firebaseapp.com",
+    projectId: "gandxoanonymous",
+    storageBucket: "gandxoanonymous.appspot.com",
+    messagingSenderId: "836606625364",
+    appId: "1:836606625364:web:7150571998131c41c0cfc1",
+    measurementId: "G-97TCHJ33KW"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Récupère le pseudo dans l'URL, ex: ?to=pseudo
+  const urlParams = new URLSearchParams(window.location.search);
+  const toPseudo = urlParams.get("to");
+
+  document.getElementById("sendBtn").addEventListener("click", async () => {
+    const msg = document.getElementById("messageInput").value.trim();
+
+    if (!msg) {
+      alert("Entre un message avant d'envoyer !");
+      return;
+    }
+
+    if (!toPseudo) {
+      alert("Pseudo destinataire introuvable dans l'URL !");
+      return;
+    }
+
+    try {
+      // Ajoute un document dans la collection 'messages'
+      await addDoc(collection(db, "messages"), {
+        to: toPseudo,
+        message: msg,
+        createdAt: new Date()
+      });
+
+      alert("Message envoyé avec succès !");
+      document.getElementById("messageInput").value = ""; // reset input
+    } catch (error) {
+      alert("Erreur lors de l'envoi : " + error.message);
+    }
+  });
+</script>
   <script>
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
