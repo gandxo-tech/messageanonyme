@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Peluche Be Mine 80cm - Le seul cadeau Saint-Valentin qui dure toute une vie. 7.000 FCFA, livraison gratuite au Bénin. Stock limité : 23/85 restantes.">
+    <title>💗 Peluche Be Mine - Le Cadeau Qui Ne Meurt Jamais | Saint-Valentin 2026</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💗</text></svg>">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+</head>
+<body>
+
+    <!-- ============================================
+         LOADING SCREEN
+         ============================================ -->
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loading-heart"><i class="fas fa-heart"></i></div>
+        <div class="loading-text">Préparation du cadeau parfait...</div>
+        <div class="loading-bar"><div id="loadingProgress"></div></div>
+        <div id="loadingPercent">0%</div>
+    </div>
+
+    <!-- CANVAS PARTICULES -->
+    <canvas id="particlesCanvas"></canvas>
+
+    <!-- CURSEUR CUSTOM -->
+    <div id="customCursor"></div>
+
+    <!-- SCROLL PROGRESS -->
+    <div id="scrollProgress"></div>
+
+    <!-- BALLONS FLOTTANTS -->
+    <div class="balloons-container">
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+        <div class="balloon"></div>
+    </div>
+
+    <!-- PERLES -->
+    <div class="pearls-container">
+        <div class="pearl-strand"></div>
+        <div class="pearl-strand"></div>
+    </div>
+
+    <!-- ============================================
+         PARTIE 1: QUIZ CADEAUX INTERACTIF
+         ============================================ -->
+    <section id="quizSection" class="quiz-section hidden">
+        <div class="quiz-container">
+            <h2 class="quiz-title">Trouve le cadeau parfait en 5 questions</h2>
+            <p class="quiz-subtitle">Découvre pourquoi la peluche est le meilleur choix</p>
+            
+            <!-- Image cœur 3D décoratif -->
+            <img id="imgHeart" class="quiz-heart-decoration" alt="Cœur 3D" loading="lazy">
+            
+            <!-- Progress bar -->
+            <div class="quiz-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="quizProgressBar"></div>
+                </div>
+                <p class="progress-text">Question <span id="currentQ">1</span> sur <span id="totalQ">5</span></p>
+            </div>
+            
+            <!-- Question card -->
+            <div class="quiz-card" id="quizCard">
+                <div class="question-icon"><i class="fas fa-gift"></i></div>
+                <h3 class="question-title" id="questionTitle">Question 1</h3>
+                <p class="question-text" id="questionText">Combien veux-tu dépenser pour la Saint-Valentin ?</p>
+                
+                <div class="quiz-options" id="quizOptions">
+                    <button class="quiz-option" data-answer="A">
+                        <span class="option-letter">A</span>
+                        <span class="option-text">Moins de 5.000 FCFA</span>
+                    </button>
+                    <button class="quiz-option" data-answer="B">
+                        <span class="option-letter">B</span>
+                        <span class="option-text">5.000 - 10.000 FCFA</span>
+                        <i class="fas fa-check option-check"></i>
+                    </button>
+                    <button class="quiz-option" data-answer="C">
+                        <span class="option-letter">C</span>
+                        <span class="option-text">Plus de 10.000 FCFA</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Quiz Result -->
+            <div class="quiz-result hidden" id="quizResult">
+                <div class="result-icon"><i class="fas fa-check-circle"></i></div>
+                <h2>✅ Parfait !</h2>
+                <p>Tu as fait les bons choix. Découvre maintenant le cadeau parfait...</p>
+                <button class="btn-unwrap-quiz" id="btnStartUnwrap">
+                    <i class="fas fa-gift"></i> Déballer le cadeau
+                </button>
+            </div>
+        </div>
+        
+        <!-- Pop-up manipulation -->
+        <div class="quiz-popup hidden" id="quizPopup">
+            <div class="popup-overlay" id="popupOverlay"></div>
+            <div class="popup-content">
+                <button class="popup-close" id="popupClose"><i class="fas fa-times"></i></button>
+                <div class="popup-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                <h3 id="popupTitle">⚠️ ATTENTION !</h3>
+                <div id="popupBody">
+                    <!-- Content will be injected by JS -->
+                </div>
+                <div class="popup-buttons">
+                    <button class="btn-popup-ok" id="btnPopupOk">
+                        <i class="fas fa-check"></i> OK j'ai compris
+                    </button>
+                    <button class="btn-popup-refuse" id="btnPopupRefuse">Non merci</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PARTIE 2: DÉBALLAGE CADEAU 3D
+         ============================================ -->
+    <section id="giftUnwrap" class="gift-unwrap-section hidden">
+        <div class="unwrap-container">
+            <h2 class="unwrap-title">Ton cadeau t'attend...</h2>
+            <p class="unwrap-subtitle">Clique pour l'ouvrir <i class="fas fa-gift"></i></p>
+            
+            <!-- Image boîte cadeau -->
+            <img id="imgGiftBox" class="gift-box-preview" alt="Boîte cadeau Saint-Valentin" loading="lazy">
+            
+            <!-- Canvas Three.js pour boîte cadeau 3D -->
+            <div id="giftBox3D" class="gift-box-3d"></div>
+            
+            <button class="btn-unwrap pulse" id="btnUnwrap">
+                <span class="icon"><i class="fas fa-gift"></i></span>
+                <span>Ouvrir le cadeau</span>
+            </button>
+            
+            <div class="unwrap-hint">
+                <span class="pulse-dot"></span>
+                Clique ici pour découvrir
+            </div>
+        </div>
+        
+        <!-- Canvas confetti explosion -->
+        <canvas id="unwrapConfetti" class="unwrap-confetti"></canvas>
+        
+        <!-- Message de transition -->
+        <div id="transitionMessage" class="transition-message hidden">
+            <div class="transition-icon"><i class="fas fa-heart"></i></div>
+            <p class="transition-text fade-in">Voici le cadeau parfait...</p>
+            <p class="transition-text fade-in delay-1">Celui qui ne meurt jamais</p>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 1: HERO + HOOK 1
+         ============================================ -->
+    <section id="hero" class="hero-section">
+        <div class="special-offer-badge">SPECIAL OFFER<br>Valentine's Day</div>
+        
+        <div class="hero-text">
+            <h1 class="hero-line-1">Dans 3 jours, vos fleurs seront mortes.</h1>
+            <h2 class="hero-line-2">Mais cette peluche...</h2>
+            <h2 class="hero-line-3">Elle la gardera <span class="gold">toute sa vie.</span></h2>
+        </div>
+
+        <div class="product-hero">
+            <div class="save-badge">
+                <span>SAVE</span>
+                <span class="percent">30%</span>
+                <span>OFF</span>
+            </div>
+            <div class="gift-box"></div>
+            <!-- Image hero peluche "Be Mine" -->
+            <img id="imgHero" class="hero-teddy-img" alt="Peluche Be Mine" loading="eager">
+            <div id="teddy3DHero"></div>
+            <div class="hearts-explosion">
+                <div class="heart"><i class="fas fa-heart"></i></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+                <div class="heart"><i class="fas fa-heart"></i></div>
+            </div>
+        </div>
+
+        <button class="btn-shop-now pulse" onclick="scrollToCommander()">
+            <span>SHOP NOW</span>
+            <span class="price">7.000 FCFA</span>
+        </button>
+
+        <p class="hero-guarantee">
+            <i class="fas fa-check-circle"></i> Livraison gratuite • 
+            <i class="fas fa-check-circle"></i> Avant le 14 février
+        </p>
+
+        <div class="trust-badges">
+            <div class="badge">
+                <i class="fas fa-shipping-fast"></i>
+                <div><strong>Fast Delivery</strong><span>24-48h Bénin</span></div>
+            </div>
+            <div class="badge">
+                <i class="fas fa-lock"></i>
+                <div><strong>Fully Secured</strong><span>Paiement sécurisé</span></div>
+            </div>
+            <div class="badge">
+                <i class="fas fa-undo"></i>
+                <div><strong>Easy Return</strong><span>30 jours garantie</span></div>
+            </div>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="mouse"></div>
+            <span>Découvrir</span>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 2 + SECTION 2: COMPARAISON TABLEAU
+         ============================================ -->
+    <section id="comparison" class="section-comparison">
+        <div class="container">
+            <div class="hook-banner">
+                <div class="icon"><i class="fas fa-money-bill-wave"></i></div>
+                <h2>Combien avez-vous gaspillé en cadeaux qui ont fini à la poubelle ?</h2>
+                <p>Fleurs fanées. Restos oubliés. Bijoux dans un tiroir.</p>
+            </div>
+
+            <h2 class="section-title">La vérité sur les cadeaux Saint-Valentin</h2>
+
+            <!-- TABLEAU COMPARATIF -->
+            <div class="comparison-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cadeau</th>
+                            <th>Prix</th>
+                            <th>Durée de vie</th>
+                            <th>Utilisation</th>
+                            <th>ROI émotionnel</th>
+                            <th>Verdict</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Fleurs -->
+                        <tr class="loser-row">
+                            <td><i class="fas fa-seedling"></i> <strong>Fleurs</strong></td>
+                            <td>12.000 FCFA</td>
+                            <td class="bad">3 jours</td>
+                            <td class="bad">1× puis poubelle</td>
+                            <td class="bad">0/10</td>
+                            <td><span class="verdict-bad"><i class="fas fa-times-circle"></i> GASPILLAGE</span></td>
+                        </tr>
+                        
+                        <!-- Restaurant -->
+                        <tr class="loser-row">
+                            <td><i class="fas fa-utensils"></i> <strong>Restaurant</strong></td>
+                            <td>40.000 FCFA</td>
+                            <td class="bad">1 soirée (2h)</td>
+                            <td class="bad">Oublié en 24h</td>
+                            <td class="bad">2/10</td>
+                            <td><span class="verdict-bad"><i class="fas fa-times-circle"></i> ÉPHÉMÈRE</span></td>
+                        </tr>
+                        
+                        <!-- Bijoux -->
+                        <tr class="loser-row">
+                            <td><i class="fas fa-gem"></i> <strong>Bijoux</strong></td>
+                            <td>150.000+ FCFA</td>
+                            <td class="bad">Tiroir éternel</td>
+                            <td class="bad">2-3×/an</td>
+                            <td class="bad">3/10</td>
+                            <td><span class="verdict-bad"><i class="fas fa-times-circle"></i> OUBLIÉ</span></td>
+                        </tr>
+                        
+                        <!-- Peluche WINNER -->
+                        <tr class="winner-row">
+                            <td><i class="fas fa-crown"></i> <strong>Peluche Be Mine</strong></td>
+                            <td class="gold">7.000 FCFA</td>
+                            <td class="gold">5+ ans</td>
+                            <td class="gold">365 jours/an</td>
+                            <td class="gold">10/10 <i class="fas fa-infinity"></i></td>
+                            <td><span class="verdict-good"><i class="fas fa-check-circle"></i> PARFAIT</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Battle Grid (version visuelle) -->
+            <div class="battle-grid">
+                <!-- LOSER 1: Fleurs -->
+                <div class="battle-card loser">
+                    <div class="death-stamp"><i class="fas fa-times-circle"></i> MORT EN 3 JOURS</div>
+                    <div class="icon-circle dead"><i class="fas fa-seedling"></i></div>
+                    <h3>Fleurs</h3>
+                    <div class="price-wasted">12.000 FCFA perdus</div>
+                    <ul class="facts">
+                        <li><i class="far fa-clock"></i> Mortes en 3 jours maximum</li>
+                        <li><i class="far fa-sad-tear"></i> Elle pleure de les voir faner</li>
+                        <li><i class="fas fa-trash"></i> Direction la poubelle</li>
+                        <li><i class="fas fa-money-bill-wave"></i> Argent gaspillé</li>
+                        <li><i class="fas fa-chart-line-down"></i> ROI : 0/10</li>
+                    </ul>
+                </div>
+
+                <!-- LOSER 2: Restaurant -->
+                <div class="battle-card loser">
+                    <div class="death-stamp"><i class="fas fa-times-circle"></i> OUBLIÉ DEMAIN</div>
+                    <div class="icon-circle dead"><i class="fas fa-utensils"></i></div>
+                    <h3>Restaurant</h3>
+                    <div class="price-wasted">40.000 FCFA/1 soir</div>
+                    <ul class="facts">
+                        <li><i class="far fa-clock"></i> Oublié en 24 heures</li>
+                        <li><i class="fas fa-camera"></i> Juste des photos Instagram</li>
+                        <li><i class="fas fa-wind"></i> Expérience éphémère</li>
+                        <li><i class="fas fa-money-bill-wave"></i> Trop cher pour 2h</li>
+                        <li><i class="fas fa-chart-line-down"></i> ROI : 2/10</li>
+                    </ul>
+                </div>
+
+                <!-- LOSER 3: Bijoux -->
+                <div class="battle-card loser">
+                    <div class="death-stamp"><i class="fas fa-times-circle"></i> DANS UN TIROIR</div>
+                    <div class="icon-circle dead"><i class="fas fa-gem"></i></div>
+                    <h3>Bijoux</h3>
+                    <div class="price-wasted">150.000+ FCFA</div>
+                    <ul class="facts">
+                        <li><i class="fas fa-box"></i> Oublié dans un tiroir</li>
+                        <li><i class="fas fa-tshirt"></i> Porté 2-3 fois par an</li>
+                        <li><i class="fas fa-exclamation-triangle"></i> Peur de le perdre</li>
+                        <li><i class="fas fa-money-bill-wave"></i> Investissement lourd</li>
+                        <li><i class="fas fa-chart-line-down"></i> ROI : 3/10</li>
+                    </ul>
+                </div>
+
+                <!-- WINNER: Peluche -->
+                <div class="battle-card winner">
+                    <div class="crown"><i class="fas fa-crown"></i></div>
+                    <div class="winner-stamp"><i class="fas fa-star"></i> ÉTERNELLE <i class="fas fa-infinity"></i></div>
+                    <div class="icon-circle gold"><i class="fas fa-teddy-bear"></i></div>
+                    <h3>Cette Peluche</h3>
+                    <div class="price-best">7.000 FCFA (une fois)</div>
+                    <ul class="facts gold">
+                        <li><i class="fas fa-infinity"></i> <strong>ÉTERNELLE</strong> - Dure 5+ ans</li>
+                        <li><i class="fas fa-heart"></i> <strong>Utilisée TOUS LES JOURS</strong></li>
+                        <li><i class="fas fa-chart-line"></i> <strong>ROI émotionnel INFINI</strong></li>
+                        <li><i class="fas fa-spray-can"></i> <strong>Garde parfum 4-8 semaines</strong></li>
+                        <li><i class="fas fa-bed"></i> <strong>Améliore son sommeil</strong></li>
+                        <li><i class="fas fa-star"></i> <strong>3,8 FCFA/jour sur 5 ans</strong></li>
+                        <li><i class="fas fa-chart-line"></i> <strong>ROI : 10/10</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="verdict">
+                <p>Tous les cadeaux Saint-Valentin disparaissent après quelques jours...</p>
+                <h3>SAUF CELUI-CI.</h3>
+                <p>Elle gardera cette peluche toute sa vie. C'est le seul cadeau qui devient <strong>PERMANENT</strong>.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 3 + SECTION 3: PRODUIT 3D
+         ============================================ -->
+    <section id="product" class="section-product">
+        <div class="container">
+            <div class="hook-banner philosophy">
+                <h2>Ce n'est pas juste une peluche.</h2>
+                <p>C'est <span class="highlight">VOUS</span>, quand vous n'êtes pas là.</p>
+            </div>
+
+            <div class="product-grid">
+                <div class="product-3d-col">
+                    <div class="edition-badge">
+                        <i class="fas fa-star"></i> Édition Saint-Valentin 2026 <i class="fas fa-star"></i>
+                    </div>
+                    <!-- Image studio peluche -->
+                    <img id="imgStudio" class="product-studio-img" alt="Peluche Be Mine Studio" loading="lazy">
+                    <div id="teddy3DMain" class="teddy-3d-main"></div>
+                    <div class="controls-hint">
+                        <i class="fas fa-mouse"></i> Faites glisser pour tourner
+                    </div>
+                </div>
+
+                <div class="product-details">
+                    <h2 class="product-name">Peluche Be Mine</h2>
+                    <p class="tagline">Le câlin permanent™</p>
+                    
+                    <div class="description">
+                        <p>Une peluche n'est pas un simple jouet. C'est un <strong>objet transitionnel</strong> — concept psychologique prouvé scientifiquement.</p>
+                        <p>Chaque soir, elle la serre. Chaque matin, elle la voit. <span class="highlight-red">Vous devenez permanent</span> dans sa vie quotidienne.</p>
+                    </div>
+                    
+                    <div class="features-premium">
+                        <h3>Caractéristiques premium</h3>
+                        
+                        <div class="feature">
+                            <i class="fas fa-ruler-vertical icon"></i>
+                            <div class="text">
+                                <h4>80cm de hauteur</h4>
+                                <p>Taille optimale pour un câlin complet</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-heart icon"></i>
+                            <div class="text">
+                                <h4>Cœur "Be Mine" brodé main</h4>
+                                <p>Message permanent, résiste 100+ lavages</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-certificate icon"></i>
+                            <div class="text">
+                                <h4>Tissu velours ultra-doux</h4>
+                                <p>Certifié Oeko-Tex® Standard 100</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-spray-can icon"></i>
+                            <div class="text">
+                                <h4>Mémoire olfactive 4-8 semaines</h4>
+                                <p>Garde votre parfum des mois</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-sync-alt icon"></i>
+                            <div class="text">
+                                <h4>Lavable machine 30°C</h4>
+                                <p>Entretien facile, dure des années</p>
+                            </div>
+                        </div>
+                        
+                        <div class="feature">
+                            <i class="fas fa-shield-alt icon"></i>
+                            <div class="text">
+                                <h4>Coutures renforcées 3×</h4>
+                                <p>Résiste 5+ ans d'usage quotidien</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-quick-order" onclick="scrollToCommander()">
+                        <span>Commander maintenant</span>
+                        <i class="fas fa-arrow-right arrow"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 4 + SECTION 4: SITUATIONS
+         ============================================ -->
+    <section id="situations" class="section-situations">
+        <div class="container">
+            <div class="hook-banner imagination">
+                <h2 class="hook-title">Imaginez...</h2>
+                <div class="story">
+                    <p class="line">Elle rentre fatiguée du travail.</p>
+                    <p class="line">Patron énervé. Collègues stressants.</p>
+                    <p class="line">Elle pousse la porte de sa chambre.</p>
+                    <p class="line">Elle voit cette peluche sur son lit.</p>
+                    <p class="line highlight">Elle sourit. <i class="fas fa-heart"></i></p>
+                </div>
+            </div>
+
+            <div class="situations-timeline">
+                <!-- Situation 1: RÉCONFORT -->
+                <div class="situation left">
+                    <div class="number">01</div>
+                    <div class="content">
+                        <div class="image-box">
+                            <img id="imgComfort" class="situation-img" alt="Femme souriante serrant sa peluche" loading="lazy">
+                            <div class="overlay"><i class="far fa-smile"></i></div>
+                        </div>
+                        <div class="text">
+                            <h3>Quand elle a besoin de réconfort</h3>
+                            <p class="context"><strong>Contexte :</strong> Journée difficile. Stress maximum.</p>
+                            <p class="action"><i class="fas fa-arrow-right"></i> Elle serre cette peluche 2 minutes</p>
+                            <div class="result">
+                                <p><strong>Résultat scientifique :</strong></p>
+                                <ul>
+                                    <li>Cortisol : <strong>↓ 30%</strong></li>
+                                    <li>Ocytocine : <strong>↑ 25%</strong></li>
+                                    <li>Sourire : <strong>120 secondes</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Situation 2: SOMMEIL -->
+                <div class="situation right">
+                    <div class="number">02</div>
+                    <div class="content reverse">
+                        <div class="text">
+                            <h3>Quand elle se couche</h3>
+                            <p class="context"><strong>Contexte :</strong> 23h. Lit vide. Solitude nocturne.</p>
+                            <p class="action"><i class="fas fa-arrow-right"></i> Elle pose la peluche à côté d'elle</p>
+                            <div class="result">
+                                <p><strong>Résultats :</strong></p>
+                                <ul>
+                                    <li>Endormissement : <strong>30% plus rapide</strong></li>
+                                    <li>Sommeil : <strong>Plus profond</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="image-box">
+                            <img id="imgSleep" class="situation-img" alt="Femme dort avec sa peluche" loading="lazy">
+                            <div class="overlay"><i class="fas fa-moon"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Situation 3: PARFUM -->
+                <div class="situation left">
+                    <div class="number">03</div>
+                    <div class="content">
+                        <div class="image-box">
+                            <img id="imgPerfume" class="situation-img" alt="Peluche avec parfum" loading="lazy">
+                            <div class="overlay"><i class="fas fa-spray-can"></i></div>
+                        </div>
+                        <div class="text">
+                            <h3>Quand elle pense à vous</h3>
+                            <p class="context"><strong>Contexte :</strong> Distance temporaire. Manque.</p>
+                            <p class="action"><i class="fas fa-arrow-right"></i> Elle sent la peluche. Votre parfum est là (4-8 semaines)</p>
+                            <div class="pro-tip">
+                                <div class="tip-header">
+                                    <i class="fas fa-lightbulb"></i> ASTUCE PRO
+                                </div>
+                                <p><strong>AVANT DE L'OFFRIR :</strong> Vaporisez votre parfum 10-15× sur la peluche.</p>
+                                <p><strong>DURÉE :</strong> 4-8 semaines de présence olfactive</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Situation 4: VOYAGE -->
+                <div class="situation right">
+                    <div class="number">04</div>
+                    <div class="content reverse">
+                        <div class="text">
+                            <h3>Quand elle voyage</h3>
+                            <p class="context"><strong>Contexte :</strong> Week-end. Déplacement professionnel.</p>
+                            <p class="action"><i class="fas fa-arrow-right"></i> La peluche est TOUJOURS dans sa valise</p>
+                            <div class="result">
+                                <p><strong>Statistique :</strong> 87% des femmes emmènent leur peluche-cadeau en voyage</p>
+                            </div>
+                        </div>
+                        <div class="image-box">
+                            <img id="imgTravel" class="situation-img" alt="Peluche voyage" loading="lazy">
+                            <div class="overlay"><i class="fas fa-suitcase"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 5 + SECTION 5: PRICING + ROI
+         ============================================ -->
+    <section id="pricing" class="section-pricing">
+        <div class="container">
+            <div class="hook-banner roi">
+                <h2 class="roi-title">Un cadeau utilisé 365 jours/an × 5 ans</h2>
+                <div class="roi-calculator">
+                    <div class="formula">
+                        <span class="number">7.000 FCFA</span>
+                        <span class="operator">÷</span>
+                        <span class="number">1.825 jours</span>
+                        <span class="operator">=</span>
+                        <span class="number gold">3,8 FCFA/jour</span>
+                    </div>
+                    <p class="comparison">Moins cher qu'un bonbon Mentos (25 FCFA).</p>
+                </div>
+            </div>
+
+            <div class="pricing-card-mega">
+                <div class="badge-top">
+                    <i class="fas fa-gift"></i> OFFRE EXCLUSIVE SAINT-VALENTIN 2026
+                </div>
+                
+                <!-- Image peluche lit romantique -->
+                <img id="imgBed" class="pricing-bg-img" alt="Peluche sur lit romantique" loading="lazy">
+                
+                <div class="price-display">
+                    <span class="old-price">10.000 FCFA</span>
+                    <i class="fas fa-arrow-right arrow"></i>
+                    <span class="new-price">7.000 FCFA</span>
+                </div>
+                
+                <div class="save-badge">
+                    <i class="fas fa-tag"></i> ÉCONOMISE 3.000 FCFA (-30%)
+                </div>
+                
+                <!-- COUNTDOWN -->
+                <div class="countdown-wrapper">
+                    <h4 class="countdown-title"><i class="far fa-clock"></i> Plus que</h4>
+                    <div class="countdown-display">
+                        <div class="block">
+                            <span class="number" id="days">07</span>
+                            <span class="label">Jours</span>
+                        </div>
+                        <span class="sep">:</span>
+                        <div class="block">
+                            <span class="number" id="hours">15</span>
+                            <span class="label">Heures</span>
+                        </div>
+                        <span class="sep">:</span>
+                        <div class="block">
+                            <span class="number" id="minutes">23</span>
+                            <span class="label">Min</span>
+                        </div>
+                        <span class="sep">:</span>
+                        <div class="block">
+                            <span class="number" id="seconds">45</span>
+                            <span class="label">Sec</span>
+                        </div>
+                    </div>
+                    <p class="warning-text">Pour livraison GARANTIE avant le 14 février <i class="fas fa-heart"></i></p>
+                </div>
+                
+                <!-- STOCK ALERT -->
+                <div class="stock-alert">
+                    <div class="icon-flash"><i class="fas fa-bolt"></i></div>
+                    <h4 class="title">ATTENTION - Stock limité</h4>
+                    <div class="stock-bar-container">
+                        <div class="stock-bar-fill" id="stockBar" style="width: 27%"></div>
+                    </div>
+                    <p>Plus que <span class="number-red" id="stockNumber">23</span> peluches disponibles<br>(62 vendues en 48h sur 85 produites)</p>
+                </div>
+                
+                <button class="btn-order-mega" onclick="scrollToCommander()">
+                    <i class="fas fa-shopping-cart"></i> Commander maintenant - 7.000 FCFA
+                </button>
+                
+                <div class="guarantees-mini">
+                    <span><i class="fas fa-check"></i> Livraison gratuite Bénin</span>
+                    <span><i class="fas fa-check"></i> 30 jours retour</span>
+                    <span><i class="fas fa-check"></i> Paiement sécurisé</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 6: RÉASSURANCE
+         ============================================ -->
+    <section id="trust" class="section-trust">
+        <div class="container">
+            <h2 class="section-title">Pourquoi nous faire confiance ?</h2>
+            
+            <div class="trust-grid">
+                <div class="trust-card">
+                    <div class="icon"><i class="fas fa-shipping-fast"></i></div>
+                    <h3>Livraison gratuite</h3>
+                    <p>Partout au Bénin. 24-48h à Cotonou, 2-3 jours autres villes. Suivi par WhatsApp.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="icon"><i class="fas fa-undo"></i></div>
+                    <h3>Retour 30 jours</h3>
+                    <p>Satisfait ou remboursé. Sans questions posées. Frais de retour offerts.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="icon"><i class="fas fa-lock"></i></div>
+                    <h3>Paiement sécurisé</h3>
+                    <p>MTN, Moov, Wave, Carte. Cryptage SSL 256-bit. Données protégées.</p>
+                </div>
+                
+                <div class="trust-card">
+                    <div class="icon"><i class="fas fa-certificate"></i></div>
+                    <h3>Qualité garantie</h3>
+                    <p>Tissu certifié Oeko-Tex®. Coutures renforcées 3×. Résiste 5+ ans.</p>
+                </div>
+            </div>
+            
+            <div class="payment-methods">
+                <h4 class="title">Moyens de paiement acceptés :</h4>
+                <div class="badges">
+                    <div class="badge"><i class="fas fa-mobile-alt"></i> MTN Mobile Money</div>
+                    <div class="badge"><i class="fas fa-mobile-alt"></i> Moov Money</div>
+                    <div class="badge"><i class="fas fa-wallet"></i> Wave</div>
+                    <div class="badge"><i class="fas fa-credit-card"></i> Visa / Mastercard</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 6 + SECTION 7: TÉMOIGNAGES
+         ============================================ -->
+    <section id="testimonials" class="section-testimonials">
+        <div class="container">
+            <div class="hook-banner social-proof">
+                <h2>847 hommes ont déjà offert cette peluche à leur copine.</h2>
+                <p>Voici ce que leurs copines ont dit...</p>
+            </div>
+
+            <div class="rating-global">
+                <div class="stars">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                <div>
+                    <span class="score">4.9</span>
+                    <span class="max">/5</span>
+                </div>
+                <p class="count">(847 avis vérifiés Google Reviews)</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <!-- Témoignage 1 -->
+                <div class="testimonial-card">
+                    <div class="header">
+                        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                        <div class="user-info">
+                            <h4>Aminata Diallo, 24 ans</h4>
+                            <p>Cotonou • Couple 2 ans</p>
+                        </div>
+                        <div class="verified"><i class="fas fa-check-circle"></i> Vérifié</div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <blockquote>
+                        Mon copain me l'a offerte le 14 février. J'ai pleuré de joie. Je dors avec TOUS LES SOIRS depuis 4 mois. Elle sent encore son parfum. Je ne peux plus m'en passer. Meilleur cadeau de ma vie.
+                    </blockquote>
+                    <div class="meta">
+                        <span class="badge"><i class="fas fa-ruler"></i> Distance 120km</span>
+                        <span class="badge"><i class="far fa-calendar"></i> Février 2025</span>
+                    </div>
+                </div>
+
+                <!-- Témoignage 2 -->
+                <div class="testimonial-card">
+                    <div class="header">
+                        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                        <div class="user-info">
+                            <h4>Koffi Mensah, 28 ans</h4>
+                            <p>Porto-Novo • Entrepreneur</p>
+                        </div>
+                        <div class="verified"><i class="fas fa-check-circle"></i> Vérifié</div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <blockquote>
+                        Au début sceptique. Mais quand elle l'a ouverte, elle a souri comme JAMAIS. Elle l'a appelée "Mini-Koffi". Maintenant elle lui tient compagnie quand je voyage. Best. Achat. Ever.
+                    </blockquote>
+                    <div class="meta">
+                        <span class="badge"><i class="fas fa-plane"></i> Voyage 15j/mois</span>
+                        <span class="badge"><i class="far fa-calendar"></i> Janvier 2025</span>
+                    </div>
+                </div>
+
+                <!-- Témoignage 3 -->
+                <div class="testimonial-card">
+                    <div class="header">
+                        <div class="avatar"><i class="fas fa-user-circle"></i></div>
+                        <div class="user-info">
+                            <h4>Fatoumata Soumanou, 22 ans</h4>
+                            <p>Parakou • Étudiante</p>
+                        </div>
+                        <div class="verified"><i class="fas fa-check-circle"></i> Vérifié</div>
+                    </div>
+                    <div class="stars">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <blockquote>
+                        Je l'emmène PARTOUT. Week-end, voyage, stage. C'est un morceau de lui. J'ai partagé le lien à 15 amies. Merci pour ce cadeau parfait qui me fait sourire chaque jour !
+                    </blockquote>
+                    <div class="meta">
+                        <span class="badge"><i class="fas fa-ruler"></i> Distance 400km</span>
+                        <span class="badge"><i class="far fa-calendar"></i> Décembre 2024</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="stats-testimonials">
+                <div class="stat">
+                    <span class="number">94.7%</span>
+                    <span class="label">La gardent +1 an</span>
+                </div>
+                <div class="stat">
+                    <span class="number">89%</span>
+                    <span class="label">Usage quotidien</span>
+                </div>
+                <div class="stat">
+                    <span class="number">96%</span>
+                    <span class="label">La recommandent</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         HOOK 8 + SECTION 8: COMMANDER
+         ============================================ -->
+    <section id="commander" class="section-commander">
+        <div class="container">
+            <div class="final-vision">
+                <h2 class="date">14 février 2026.</h2>
+                <div class="timeline">
+                    <p class="line">Elle ouvre votre cadeau.</p>
+                    <p class="line">Ses yeux brillent.</p>
+                    <p class="line">Elle pleure de joie.</p>
+                    <p class="spacer">— 10 ans plus tard —</p>
+                    <p class="line">2036. Elle a 34 ans maintenant.</p>
+                    <p class="line">La peluche est toujours là.</p>
+                    <p class="punch">Ce moment commence <span class="highlight-now">MAINTENANT.</span></p>
+                </div>
+            </div>
+
+            <div class="order-container">
+                <div class="order-visual">
+                    <!-- Image peluche blanche -->
+                    <img id="imgTeddyWhite" class="order-teddy-preview" alt="Peluche Be Mine Blanche" loading="lazy">
+                    <div id="teddy3DFinal" class="teddy-3d-final"></div>
+                    <div class="price-reminder">
+                        <div class="price-badge">7.000 FCFA</div>
+                        <div class="old-price-small">(au lieu de 10.000 FCFA)</div>
+                    </div>
+                    <div class="trust-stamps">
+                        <div class="stamp"><i class="fas fa-lock"></i> Paiement sécurisé</div>
+                        <div class="stamp"><i class="fas fa-shipping-fast"></i> Livraison gratuite</div>
+                        <div class="stamp"><i class="fas fa-star"></i> 847 avis 5★</div>
+                        <div class="stamp"><i class="fas fa-undo"></i> 30 jours retour</div>
+                    </div>
+                </div>
+
+                <div class="order-form-wrapper">
+                    <h2 class="form-title">Commandez votre peluche Be Mine</h2>
+                    <p class="form-subtitle">Dernière étape avant de rendre votre copine heureuse <i class="fas fa-heart"></i></p>
+                    
+                    <form id="orderForm" class="order-form" onsubmit="handleOrder(event)">
+                        <!-- Nom -->
+                        <div class="field">
+                            <label for="name"><i class="fas fa-user"></i> Votre nom complet *</label>
+                            <input type="text" id="name" name="name" required minlength="3" placeholder="Ex: Koffi Mensah">
+                            <span class="hint"><i class="fas fa-lock"></i> Jamais partagé</span>
+                        </div>
+                        
+                        <!-- WhatsApp -->
+                        <div class="field">
+                            <label for="phone"><i class="fab fa-whatsapp"></i> Votre numéro WhatsApp *</label>
+                            <input type="tel" id="phone" name="phone" required pattern="[0-9]{8,15}" placeholder="+229 XX XX XX XX">
+                            <span class="hint"><i class="fas fa-comment-dots"></i> Confirmation instantanée</span>
+                        </div>
+                        
+                        <!-- Email -->
+                        <div class="field">
+                            <label for="email"><i class="fas fa-envelope"></i> Votre email (optionnel)</label>
+                            <input type="email" id="email" name="email" placeholder="votre@email.com">
+                            <span class="hint"><i class="fas fa-file-invoice"></i> Pour facture électronique</span>
+                        </div>
+                        
+                        <!-- Ville -->
+                        <div class="field">
+                            <label for="city"><i class="fas fa-map-marker-alt"></i> Ville de livraison *</label>
+                            <select id="city" name="city" required>
+                                <option value="">Sélectionner votre ville</option>
+                                <option value="cotonou">Cotonou (24h)</option>
+                                <option value="porto-novo">Porto-Novo (24-48h)</option>
+                                <option value="parakou">Parakou (48h)</option>
+                                <option value="abomey-calavi">Abomey-Calavi (24h)</option>
+                                <option value="bohicon">Bohicon (48h)</option>
+                                <option value="autre">Autre ville (2-3j)</option>
+                            </select>
+                            <span class="hint"><i class="fas fa-truck"></i> Livraison gratuite partout</span>
+                        </div>
+                        
+                        <!-- Adresse -->
+                        <div class="field">
+                            <label for="address"><i class="fas fa-home"></i> Adresse complète *</label>
+                            <textarea id="address" name="address" required minlength="10" rows="3" placeholder="Quartier, rue, numéro, points de repère..."></textarea>
+                            <span class="hint"><i class="fas fa-info-circle"></i> Plus vous êtes précis, plus rapide</span>
+                        </div>
+                        
+                        <!-- Paiement -->
+                        <div class="field">
+                            <label for="payment"><i class="fas fa-credit-card"></i> Mode de paiement *</label>
+                            <select id="payment" name="payment" required>
+                                <option value="">Choisir votre mode de paiement</option>
+                                <option value="mtn">MTN Mobile Money</option>
+                                <option value="moov">Moov Money</option>
+                                <option value="wave">Wave</option>
+                                <option value="card">Carte bancaire</option>
+                            </select>
+                            <span class="hint"><i class="fas fa-shield-alt"></i> 100% sécurisé SSL</span>
+                        </div>
+                        
+                        <!-- Récapitulatif -->
+                        <div class="summary">
+                            <h4><i class="fas fa-receipt"></i> Récapitulatif :</h4>
+                            <div class="line">
+                                <span>Peluche Be Mine (80cm)</span>
+                                <span>7.000 FCFA</span>
+                            </div>
+                            <div class="line">
+                                <span>Livraison Bénin</span>
+                                <span class="free"><i class="fas fa-gift"></i> GRATUIT</span>
+                            </div>
+                            <div class="divider"></div>
+                            <div class="line total">
+                                <span><strong>TOTAL À PAYER</strong></span>
+                                <span><strong>7.000 FCFA</strong></span>
+                            </div>
+                            <div class="savings">
+                                <i class="fas fa-tag"></i> Vous économisez 3.000 FCFA (-30%)
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn-submit">
+                            <i class="fas fa-heart"></i> Confirmer ma commande - 7.000 FCFA
+                        </button>
+                        
+                        <p class="disclaimer">
+                            <i class="fas fa-lock"></i> Vos données sont protégées. 
+                            <i class="fas fa-truck"></i> Livraison garantie avant le 14 février.
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         FOOTER
+         ============================================ -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="col">
+                    <h3><i class="fas fa-heart"></i> Peluche Be Mine</h3>
+                    <p>Le cadeau qui ne meurt jamais</p>
+                    <p>Édition Saint-Valentin 2026 - Bénin</p>
+                </div>
+                <div class="col">
+                    <h4><i class="fas fa-phone"></i> Contact</h4>
+                    <p><i class="fab fa-whatsapp"></i> WhatsApp: +229 XX XX XX XX</p>
+                    <p><i class="fas fa-envelope"></i> <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1a727f7676755a6a7f766f79727f376c7b767f746e73747f347870">[email&#160;protected]</a></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Cotonou, Bénin</p>
+                </div>
+                <div class="col">
+                    <h4><i class="fas fa-info-circle"></i> Informations</h4>
+                    <p><a href="#"><i class="fas fa-truck"></i> Livraison & Retours</a></p>
+                    <p><a href="#"><i class="fas fa-star"></i> Avis clients (847)</a></p>
+                    <p><a href="#"><i class="fas fa-tags"></i> Prix & Promotions</a></p>
+                </div>
+                <div class="col">
+                    <h4><i class="fas fa-share-alt"></i> Suivez-nous</h4>
+                    <p><a href="#"><i class="fab fa-facebook"></i> Facebook</a></p>
+                    <p><a href="#"><i class="fab fa-instagram"></i> Instagram</a></p>
+                    <p><a href="#"><i class="fab fa-tiktok"></i> TikTok</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Peluche Saint-Valentin. <i class="fas fa-flag"></i> Fièrement béninois</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ============================================
+         MODAL SUCCÈS
+         ============================================ -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-icon"><i class="fas fa-heart"></i></div>
+            <h2>Commande confirmée avec succès !</h2>
+            <p>Merci ! Vous allez recevoir une <strong>confirmation WhatsApp</strong> dans les prochaines minutes.</p>
+            <p class="delivery-info"><i class="fas fa-box"></i> Livraison prévue avant le <strong>14 février 2026</strong></p>
+            <div class="next-steps">
+                <h4>Prochaines étapes :</h4>
+                <ol>
+                    <li><i class="fab fa-whatsapp"></i> Confirmation WhatsApp</li>
+                    <li><i class="fas fa-credit-card"></i> Instructions paiement</li>
+                    <li><i class="fas fa-shipping-fast"></i> Livraison gratuite</li>
+                    <li><i class="fas fa-smile"></i> Sourire garanti <i class="fas fa-heart"></i></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <!-- CONFETTI CANVAS -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- NOTIFICATIONS LIVE -->
+    <div id="liveNotifications" cla
